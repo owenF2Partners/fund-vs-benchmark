@@ -1,0 +1,31 @@
+﻿Name,Ticker,Morningstar Category,"Primary Prospectus 
+Benchmark",New Benchmark Name,Benchmark Ticker
+Lord Abbett Income I,LAUYX,US Fund Corporate Bond,Bloomberg US Credit TR USD,Vanguard Intermediate-Term Corporate Bond ETF,VCIT
+JPMorgan Equity Premium Income I,JEPIX,US Fund Derivative Income,S&P 500 TR USD,S&P 500 TR USD,^SP500TR
+Lazard Emerging Markets Equity Instl,LZEMX,US Fund Diversified Emerging Mkts,MSCI EM NR USD,Vanguard Emerging Markets Stock Index Fund,VWO
+Fidelity Advisor Focused Em Mkts I,FIMKX,US Fund Diversified Emerging Mkts,MSCI EM NR USD,Vanguard Emerging Markets Stock Index Fund,VWO
+Invesco SteelPath MLP Alpha Y,MLPOX,US Fund Energy Limited Partnership,Alerian MLP TR USD,Alerian MLP ETF,AMLP
+First Eagle Gold I,FEGIX,US Fund Equity Precious Metals,MSCI World NR USD,iShares MSCI Global Gold Miners ETF,RING
+First Eagle Overseas I,SGOIX,US Fund Foreign Large Blend,MSCI EAFE NR USD,Vanguard FTSE Developed Markets Index Fund ETF Shares,VEA
+Goldman Sachs GQG Ptnrs Intl Opps Inv,GSINX,US Fund Foreign Large Growth,MSCI ACWI Ex USA NR USD,Vanguard Total International Stock ETF,VXUS
+Goldman Sachs International Eq Inc Inv,GSTKX,US Fund Foreign Large Value,MSCI EAFE NR USD,Vanguard FTSE Developed Markets Index Fund ETF Shares,VEA
+Fidelity Advisor Intl Small Cap I,FIXIX,US Fund Foreign Small/Mid Blend,MSCI ACWI Ex USA Small NR USD,Vanguard FTSE All-World ex-US Small-Cap Index Fund ETF Shares,VSS
+Thornburg Global Opportunities I,THOIX,US Fund Global Large-Stock Blend,MSCI ACWI NR USD,Vanguard Total World Stock Index Fund ETF,VT
+First Eagle Global I,SGIIX,US Fund Global Moderately Aggressive Allocation,MSCI World NR USD,Vanguard Total World Stock Index Fund ETF,VT
+Invesco High Yield Y,AHHYX,US Fund High Yield Bond,Bloomberg US Agg Bond TR USD,SPDR Bloomberg High Yield Bond ETF,JNK
+Invesco Core Bond Y,OPBYX,US Fund Intermediate Core Bond,Bloomberg US Agg Bond TR USD,Vanguard Total Bond Market Index Fund ETF,BND
+PIMCO Total Return I2,PTTPX,US Fund Intermediate Core-Plus Bond,Bloomberg US Agg Bond TR USD,Vanguard Total Bond Market Index Fund ETF,BND
+Invesco Total Return Bond ETF,GTO,US Fund Intermediate Core-Plus Bond,Bloomberg US Agg Bond TR USD,Vanguard Total Bond Market Index Fund ETF,BND
+Fidelity Total Bond ETF,FBND,US Fund Intermediate Core-Plus Bond,Bloomberg US Agg Bond TR USD,Vanguard Total Bond Market Index Fund ETF,BND
+MFS Growth I,MFEIX,US Fund Large Growth,Russell 3000 TR USD,Vanguard Growth Index Fund ETF,VUG
+Oakmark Select Investor,OAKLX,US Fund Large Value,S&P 500 TR USD,S&P 500 TR USD,^SP500TR
+Goldman Sachs Large Cp Val Insghts Inv,GCVTX,US Fund Large Value,Russell 1000 TR USD,Vanguard Value Index Fund ETF,VTV
+BlackRock Equity Dividend Instl,MADVX,US Fund Large Value,S&P 500 TR USD,S&P 500 TR USD,^SP500TR
+MFS Mid Cap Value I,MCVIX,US Fund Mid-Cap Value,Russell Mid Cap Value TR USD,Vanguard Mid-Cap Value Index Fund ETF,VOE
+Goldman Sachs Absolute Ret Trckr Inv,GSRTX,US Fund Multistrategy,MSCI World NR USD,Vanguard Total World Stock Index Fund ETF,VT
+Voya Strategic Income Opportunities I,IISIX,US Fund Nontraditional Bond,Bloomberg US Agg Bond TR USD,Vanguard Total Bond Market Index Fund ETF,BND
+BlackRock Low Duration Bond Instl,BFMSX,US Fund Short-Term Bond,Bloomberg US Agg Bond TR USD,Vanguard Ultra-Short Bond ETF,VUSB
+Invesco Discovery Y,ODIYX,US Fund Small Growth,Russell 2000 Growth TR USD,Vanguard Small-Cap Growth Index Fund ETF,VBK
+Fidelity Advisor Small Cap Growth I,FCIGX,US Fund Small Growth,Russell 3000 TR USD,Vanguard Small-Cap Growth Index Fund ETF,VBK
+PGIM Ultra Short Bond ETF,PULS,US Fund Ultrashort Bond,Bloomberg US Agg Bond TR USD,Vanguard Ultra-Short Bond ETF,VUSB
+AAM SLC Low Duration Income ETF,LODI,US Fund Short-Term Bond,Bloomberg US Govt/Credit 1-3 Yr TR USD,Vanguard Short-Term Bond Index Fund ETF,BSV
