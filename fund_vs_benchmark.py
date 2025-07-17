@@ -54,17 +54,22 @@ st.write(f"Fetching data from {start.date()} to {end.date()}...")
 tickers = [fund_ticker, benchmark_ticker]
 data = yf.download(tickers, start=start, end=end)
 
-if data.empty:
+if data.empty or len(data) == 0:
     st.error("No data was retrieved. Please check the tickers and try again.")
     st.stop()
 
 # Always use 'Close'
 if isinstance(data.columns, pd.MultiIndex):
-    price_data = data["Close"].copy()
+    if "Close" in data.columns.levels[0]:
+        price_data = data["Close"].copy()
+    else:
+        st.error("No 'Close' data found in downloaded data.")
+        st.stop()
 else:
     price_data = data.copy()
     price_data.columns = tickers[:1]  # single ticker fallback
 
+# Forward fill & drop NA
 price_data = price_data.ffill().dropna()
 
 # Verify both tickers present
@@ -74,6 +79,10 @@ if missing:
     st.error(f"Data for the following tickers could not be retrieved: {', '.join(missing)}")
     st.stop()
 
+if price_data.shape[0] < 1:
+    st.error("Downloaded data has no rows.")
+    st.stop()
+
 # Normalize
 norm_data = price_data / price_data.iloc[0] * 100
 
@@ -81,7 +90,7 @@ norm_data = price_data / price_data.iloc[0] * 100
 final_vals = norm_data.iloc[-1].round(2)
 final_vals.index = [fund_name if t == fund_ticker else "Benchmark" for t in final_vals.index]
 
-# Compute % Return
+# Compute % Return from 100 base
 returns = ((final_vals - 100)).round(2)
 
 # Show snapshot above chart
@@ -90,7 +99,7 @@ st.subheader("Performance Snapshot")
 col1, col2 = st.columns(2)
 with col1:
     st.markdown(f"""
-    <div style="text-align: center; font-size: 24px; font-weight: bold; color: white;">
+    <div style="text-align: center; font-size: 28px; font-weight: bold; color: white;">
     {fund_name} ({fund_ticker})  
     <br>
     {returns[fund_name]}%
@@ -99,7 +108,7 @@ with col1:
 
 with col2:
     st.markdown(f"""
-    <div style="text-align: center; font-size: 24px; font-weight: bold; color: white;">
+    <div style="text-align: center; font-size: 28px; font-weight: bold; color: white;">
     Benchmark ({benchmark_ticker})  
     <br>
     {returns['Benchmark']}%
