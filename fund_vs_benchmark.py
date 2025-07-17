@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 import plotly.express as px
-import datetime
+import numpy as np
 
 # Set page config to wide
 st.set_page_config(layout="wide")
@@ -36,7 +36,7 @@ horizon = st.selectbox(
     index=0
 )
 
-today = pd.Timestamp(datetime.date.today())
+today = pd.Timestamp.today()
 if horizon == "YTD":
     start = pd.Timestamp(year=today.year, month=1, day=1)
 elif horizon == "1Y":
@@ -55,22 +55,17 @@ st.write(f"Fetching data from {start.date()} to {end.date()}...")
 tickers = [fund_ticker, benchmark_ticker]
 data = yf.download(tickers, start=start, end=end)
 
-if data.empty or len(data) == 0:
+if data.empty:
     st.error("No data was retrieved. Please check the tickers and try again.")
     st.stop()
 
 # Always use 'Close'
 if isinstance(data.columns, pd.MultiIndex):
-    if "Close" in data.columns.levels[0]:
-        price_data = data["Close"].copy()
-    else:
-        st.error("No 'Close' data found in downloaded data.")
-        st.stop()
+    price_data = data["Close"].copy()
 else:
     price_data = data.copy()
-    price_data.columns = tickers[:1]  # single ticker fallback
+    price_data.columns = tickers[:1]  # fallback
 
-# Forward fill & drop NA
 price_data = price_data.ffill().dropna()
 
 # Verify both tickers present
@@ -80,21 +75,18 @@ if missing:
     st.error(f"Data for the following tickers could not be retrieved: {', '.join(missing)}")
     st.stop()
 
-if price_data.shape[0] < 1:
-    st.error("Downloaded data has no rows.")
-    st.stop()
+# Calculate actual % return
+start_prices = price_data.iloc[0]
+end_prices = price_data.iloc[-1]
+returns = ((end_prices - start_prices) / start_prices * 100).round(2)
 
-# Normalize
-norm_data = price_data / price_data.iloc[0] * 100
+# Rename indexes to fund name / benchmark
+returns.index = [fund_name if t == fund_ticker else "Benchmark" for t in returns.index]
 
-# Final values
-final_vals = norm_data.iloc[-1].round(2)
-final_vals.index = [fund_name if t == fund_ticker else "Benchmark" for t in final_vals.index]
+# Normalize for chart
+norm_data = price_data / start_prices * 100
 
-# Compute % Return from 100 base
-returns = ((final_vals - 100)).round(2)
-
-# Show snapshot above chart
+# Performance snapshot
 st.subheader("Performance Snapshot")
 
 col1, col2 = st.columns(2)
@@ -130,3 +122,46 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
+# ---------------------------
+# RISK METRICS
+# ---------------------------
+
+# Compute risk metrics for the fund
+fund_prices = price_data[fund_ticker]
+daily_returns = fund_prices.pct_change().dropna()
+
+# Annualized volatility
+volatility = daily_returns.std() * np.sqrt(252) * 100
+
+# Max Drawdown
+cum_returns = (1 + daily_returns).cumprod()
+cum_max = cum_returns.cummax()
+drawdowns = (cum_returns - cum_max) / cum_max
+max_drawdown = drawdowns.min() * 100
+
+# Historical 1-day 95% Value at Risk (VaR)
+VaR_95 = np.percentile(daily_returns, 5) * 100
+
+# Show snapshot
+st.subheader("Risk Profile Snapshot (Mutual Fund Only)")
+
+risk_cols = st.columns(3)
+
+risk_cols[0].markdown(f"""
+<div style="text-align:center; font-size:20px; font-weight:bold;">
+Volatility<br><span style="color:#2c7be5;">{volatility:.2f}%</span>
+</div>
+""", unsafe_allow_html=True)
+
+risk_cols[1].markdown(f"""
+<div style="text-align:center; font-size:20px; font-weight:bold;">
+Max Drawdown<br><span style="color:#e53e3e;">{max_drawdown:.2f}%</span>
+</div>
+""", unsafe_allow_html=True)
+
+risk_cols[2].markdown(f"""
+<div style="text-align:center; font-size:20px; font-weight:bold;">
+95% Daily VaR<br><span style="color:#f0ad4e;">{VaR_95:.2f}%</span>
+</div>
+""", unsafe_allow_html=True)
