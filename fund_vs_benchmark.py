@@ -98,9 +98,10 @@ returns = ((final_vals - 100)).round(2)
 st.subheader("Performance Snapshot")
 
 col1, col2 = st.columns(2)
+
 with col1:
     st.markdown(f"""
-    <div style="text-align: center; font-size: 28px; font-weight: bold; color: white;">
+    <div style="text-align: center; font-size: 24px; font-weight: bold; color: #1f77b4;">
     {fund_name} ({fund_ticker})  
     <br>
     {returns[fund_name]}%
@@ -109,7 +110,7 @@ with col1:
 
 with col2:
     st.markdown(f"""
-    <div style="text-align: center; font-size: 28px; font-weight: bold; color: white;">
+    <div style="text-align: center; font-size: 24px; font-weight: bold; color: #1f77b4;">
     Benchmark ({benchmark_ticker})  
     <br>
     {returns['Benchmark']}%
