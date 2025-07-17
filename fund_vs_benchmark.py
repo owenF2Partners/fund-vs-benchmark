@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 import plotly.express as px
+import datetime
 
 # Set page config to wide
 st.set_page_config(layout="wide")
@@ -35,7 +36,7 @@ horizon = st.selectbox(
     index=0
 )
 
-today = pd.Timestamp.today()
+today = pd.Timestamp(datetime.date.today())
 if horizon == "YTD":
     start = pd.Timestamp(year=today.year, month=1, day=1)
 elif horizon == "1Y":
