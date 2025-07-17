@@ -77,6 +77,35 @@ if missing:
 # Normalize
 norm_data = price_data / price_data.iloc[0] * 100
 
+# Final values
+final_vals = norm_data.iloc[-1].round(2)
+final_vals.index = [fund_name if t == fund_ticker else "Benchmark" for t in final_vals.index]
+
+# Compute % Return
+returns = ((final_vals - 100)).round(2)
+
+# Show snapshot above chart
+st.subheader("Performance Snapshot")
+
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown(f"""
+    <div style="text-align: center; font-size: 24px; font-weight: bold; color: white;">
+    {fund_name} ({fund_ticker})  
+    <br>
+    {returns[fund_name]}%
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div style="text-align: center; font-size: 24px; font-weight: bold; color: white;">
+    Benchmark ({benchmark_ticker})  
+    <br>
+    {returns['Benchmark']}%
+    </div>
+    """, unsafe_allow_html=True)
+
 # Melt for plotting
 df_melted = norm_data.reset_index().melt(id_vars="Date", var_name="Ticker", value_name="Normalized Price")
 
@@ -90,32 +119,3 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-
-# Final values
-final_vals = norm_data.iloc[-1].round(2)
-final_vals.index = [fund_name if t == fund_ticker else "Benchmark" for t in final_vals.index]
-
-perf_table = pd.DataFrame({
-    "Name": final_vals.index,
-    "Final Value (Start = 100)": final_vals.values
-})
-
-# Round to 2 decimal places (again just in case)
-perf_table["Final Value (Start = 100)"] = perf_table["Final Value (Start = 100)"].round(2)
-
-# Display styled table (no index, white bold text)
-styled_table = (
-    perf_table.style
-    .format({"Final Value (Start = 100)": "{:.2f}"})
-    .set_table_styles(
-        [
-            {"selector": "th", "props": [("color", "white"), ("font-weight", "bold"), ("background-color", "#333")]},
-            {"selector": "td", "props": [("color", "white"), ("font-weight", "bold")]}
-        ]
-    )
-    .hide(axis="index")
-    .to_html()
-)
-
-st.subheader("Final Value (Indexed to 100 at Start)")
-st.markdown(styled_table, unsafe_allow_html=True)
