@@ -144,7 +144,7 @@ max_drawdown = drawdowns.min() * 100
 VaR_95 = np.percentile(daily_returns, 5) * 100
 
 # Show snapshot
-st.subheader("Risk Profile Snapshot (Mutual Fund Only)")
+st.subheader(f"Risk Profile Snapshot ({fund_name})")
 
 risk_cols = st.columns(3)
 
